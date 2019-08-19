@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>
+Words
+</title>
+</head>
+<body>
+
+<div>
+<form action="search" method="GET">
+<input type="text" name="word"><br>
+<input type="hidden">
+</form>
+</div>
+
+{% if words %}
+<ol>
+{% for i in words %}
+<ul>
+<li>{{ i }}</li>
+</ul>
+{% endfor %}
+</ol>
+{% endif %}
+</body>
+</html>

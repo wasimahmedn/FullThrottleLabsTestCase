@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>
+Words
+</title>
+<meta charset= 'utf-8'>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+<form id="srch">
+{% csrf_token %}
+<input type="text" id='wrd'>
+<input type="submit">
+</form>
+<!---<form action="search" method="GET">
+<input type="text" name="word"><br>
+<input type="hidden">
+</form>-->
+
+{% if words %}
+<ol>
+{% for i in words %}
+<ul>
+<li>{{ i }}</li>
+</ul>
+{% endfor %}
+</ol>
+{% endif %}
+
+<script>
+$(document).on('submit','#srch',function(e){
+	e.preventDefault();
+
+	$ajax({
+		type:'POST',
+		url:'user/article/',
+		data:{
+			word:$('#wrd').val(),
+			csrfmiddlewaretoken:$('input[csrfmiddlewaretoken]').val(),
+		},
+		success:fundtion(){
+			alert("updated message");
+		}
+	});
+});
+</script>
+
+{% if articles.count > 0 %}
+
+{% for article in articles %}
+	<li>{{ article }} </li>
+{% endfor %}
+
+
+{% else %}
+
+<li> None to show! </li>
+
+{% endif %}
+</body>
+</html>

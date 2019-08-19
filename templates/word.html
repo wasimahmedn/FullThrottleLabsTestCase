@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>
+Words
+</title>
+<meta charset= 'utf-8'>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+
+<input id='wrd'>
+<!---<form action="search" method="GET">
+<input type="text" name="word"><br>
+<input type="hidden">
+</form>-->
+
+{% if words %}
+<ol>
+{% for i in words %}
+<ul>
+<li>{{ i }}</li>
+</ul>
+{% endfor %}
+</ol>
+{% endif %}
+
+<script>
+$( "#wrd" ).autocomplete({
+	source:function(request,response)
+		$.ajax({
+				url:'words.py',
+				dataType:'jason',
+				data:{name:$(this).val()},
+					
+				success: function( data ){
+
+					response($.map(data, function (item) {
+						return {
+							id:item.id,
+							value:item.value
+							}
+						}))
+				}
+			});
+	},
+	autofocus:true,
+});
+</script>
+</body>
+</html>
